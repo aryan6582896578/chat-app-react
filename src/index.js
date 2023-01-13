@@ -4,12 +4,14 @@ import "./index.css";
 import Clock from "./Components/Clock";
 import reportWebVitals from "./reportWebVitals";
 import Welcome from "./Components/WelcomeDialog";
+import { BasicForm } from "./Components/Form";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
     <Clock />
-    <Welcome />
+    <Welcome username="Mausam" />
+    <BasicForm />
   </React.StrictMode>
 );
 
