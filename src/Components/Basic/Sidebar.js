@@ -6,12 +6,16 @@ import ErrorPage from "./ErrorPage";
 import Login from "../Login/Login";
 import useToken from "../../useToken";
 function setToken(userToken) {
-  sessionStorage.setItem("token", JSON.stringify(userToken));
+  localStorage.setItem("token", JSON.stringify(userToken));
 }
 function getToken() {
   const tokenString = localStorage.getItem("token");
   const userToken = JSON.parse(tokenString);
   return userToken?.token;
+}
+function logout() {
+  localStorage.clear();
+  window.location.reload();
 }
 export default function Sidebar() {
   const { token, setToken } = useToken();
@@ -49,6 +53,7 @@ export default function Sidebar() {
               <Link to={`time`}>Time</Link>
             </li>
           </ul>
+          <button onClick={logout}>Log Out</button>
         </nav>
       </div>
       <Switch>
