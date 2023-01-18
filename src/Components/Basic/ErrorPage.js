@@ -1,15 +1,5 @@
 import React, { Component } from "react";
-import useLocation from "react-router-dom";
-
 export class ErrorPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      location: "",
-    };
-  }
-
   render() {
     return (
       <h1>

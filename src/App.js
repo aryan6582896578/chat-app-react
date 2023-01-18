@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Clock from "./Components/Clock";
-import Welcome from "./Components/Welcome";
+import Clock from "./Components/Basic/Clock";
+import Welcome from "./Components/Basic/Welcome";
 export class App extends Component {
   render() {
     return (

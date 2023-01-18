@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import Clock from "./Components/Clock";
+import "./CSS/index.css";
+
 import reportWebVitals from "./reportWebVitals";
 
-import Sidebar from "./Components/Sidebar";
+import Sidebar from "./Components/Basic/Sidebar";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
