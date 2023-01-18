@@ -3,9 +3,14 @@ const cors = require("cors");
 const app = express();
 
 app.use(cors());
+var rand = function () {
+  return Math.random().toString(36).substr(2); // remove `0.`
+};
+
 app.use("/login", (req, res) => {
+  const token = rand();
   res.send({
-    token: "test123",
+    token,
   });
 });
 
