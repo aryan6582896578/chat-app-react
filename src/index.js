@@ -3,15 +3,13 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import Clock from "./Components/Clock";
 import reportWebVitals from "./reportWebVitals";
-import Welcome from "./Components/WelcomeDialog";
-import { BasicForm } from "./Components/Form";
+
+import Sidebar from "./Components/Sidebar";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <Clock />
-    <Welcome username="Mausam" />
-    <BasicForm />
+    <Sidebar />
   </React.StrictMode>
 );
 
