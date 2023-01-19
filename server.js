@@ -23,7 +23,7 @@ var rand = function () {
   return Math.random().toString(36).substr(2); // remove `0.`
 };
 
-app.post("/login", (req, res) => {
+app.use("/login", (req, res) => {
   const token = rand();
   res.send({
     token,
@@ -34,11 +34,11 @@ app.post("/post", (req, res) => {
   myData
     .save()
     .then((item) => {
-      res.send("item saved to database");
+      res.send(item);
       console.log("worked");
     })
     .catch((err) => {
-      res.status(400).send("unable to save to database");
+      res.status(400).send(err);
     });
 });
 app.listen(8080, () =>
