@@ -31,7 +31,7 @@ export default function Login({ setToken }) {
       username,
       password,
     });
-    await postData({ username, password });
+    await postData({ username, password, token });
     // await postData({ username, password });
     console.log("after");
     console.log(token);

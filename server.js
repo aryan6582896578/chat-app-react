@@ -13,6 +13,7 @@ mongoose.connect("mongodb+srv://tbot:tbot1738@cluster0.dn1av.mongodb.net/");
 const credentials = new mongoose.Schema({
   username: String,
   password: String,
+  token: String,
 });
 var User = mongoose.model("User", credentials);
 
