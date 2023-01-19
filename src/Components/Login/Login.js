@@ -32,12 +32,13 @@ export default function Login({ setToken }) {
       password,
     });
     const tk = token.token;
-    console.log(token);
+    console.log(tk);
+    console.log(typeof tk);
     await postData({ username, password, tk });
     // await postData({ username, password });
     console.log("after");
-    console.log(token);
-    console.log(username, password);
+
+    console.log(username, password, token);
 
     setToken(token);
   };

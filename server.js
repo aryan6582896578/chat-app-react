@@ -13,7 +13,7 @@ mongoose.connect("mongodb+srv://tbot:tbot1738@cluster0.dn1av.mongodb.net/");
 const credentials = new mongoose.Schema({
   username: String,
   password: String,
-  token: String,
+  tk: String,
 });
 var User = mongoose.model("User", credentials);
 
@@ -31,10 +31,12 @@ app.use("/login", (req, res) => {
 });
 app.post("/post", (req, res) => {
   var myData = new User(req.body);
+  console.log(User(req.body));
   myData
     .save()
     .then((item) => {
       res.send(item);
+      console.log(item);
       console.log("worked");
     })
     .catch((err) => {
