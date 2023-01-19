@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "../CSS/Login.css";
@@ -45,7 +46,7 @@ export default function Login({ setToken }) {
 
   return (
     <div className="login-wrapper">
-      <h1>Please Log In</h1>
+      <h1>Please  Register</h1>
       <form onSubmit={handleSubmit}>
         <label>
           <p>Username</p>
