@@ -17,6 +17,8 @@ const credentials = new mongoose.Schema({
 });
 var User = mongoose.model("User", credentials);
 
+console.log("Trying to find...");
+
 app.use(cors());
 // Create a Token for New Users
 var rand = function () {
@@ -29,20 +31,68 @@ app.use("/login", (req, res) => {
     token,
   });
 });
-app.post("/post", (req, res) => {
+// app.use("/post", (req, res) => {
+//   var myData = new User(req.body);
+//   // console.log(User(req.body));
+//   User.findOne({ username: myData.username }, function (err, docs) {
+//     if (docs == null) {
+//       // console.log(err, docs);
+//       // myData
+//       //   .save()
+//       //   .then((item) => {
+//       //     res.send(item);
+//       //     console.log(item);
+//       //     // console.log("worked");
+//       //   })
+//       //   .catch((err) => {
+//       //     res.status(400).send(err);
+//       //   });
+//       console.log("Username did not match");
+//       response = { status: "no" };
+//       res.send(response);
+//       return;
+//     } else if (docs != null) {
+//       User.findOne(
+//         { username: myData.username, password: myData.password },
+//         function (err, docs) {
+//           if (docs != null) {
+//             console.log(docs);
+//             console.log("Username and Password Matched.");
+//             response = { status: "yes" };
+//             res.send(response);
+//           } else {
+//             response = { status: "no" };
+//             res.send(response);
+//             return;
+//           }
+//         }
+//       );
+//     }
+//   });
+// });
+
+app.use("/post", (req, res) => {
   var myData = new User(req.body);
-  console.log(User(req.body));
-  myData
-    .save()
-    .then((item) => {
-      res.send(item);
-      console.log(item);
-      console.log("worked");
-    })
-    .catch((err) => {
-      res.status(400).send(err);
-    });
+  User.findOne({ username: myData.username }, function (err, docs) {
+    if (docs != null) {
+      User.findOne(
+        { username: myData.username, password: myData.password },
+        function (err, docs) {
+          if (docs != null) {
+            console.log("Username and Password Matched.");
+            response = { status: "yes" };
+            res.send(response);
+          } else {
+            response = { status: "no" };
+            res.send(response);
+            return;
+          }
+        }
+      );
+    }
+  });
 });
+
 app.listen(8080, () =>
   console.log("API is running on http://localhost:8080/login")
 );
