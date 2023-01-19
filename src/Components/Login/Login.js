@@ -11,6 +11,15 @@ async function loginUser(credentials) {
     body: JSON.stringify(credentials),
   }).then((data) => data.json());
 }
+async function postData(credentials) {
+  return fetch("http://localhost:8080/post", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
 
 export default function Login({ setToken }) {
   const [username, setUserName] = useState();
@@ -22,6 +31,8 @@ export default function Login({ setToken }) {
       username,
       password,
     });
+    await postData({ username, password });
+    // await postData({ username, password });
     console.log("after");
     console.log(token);
     console.log(username, password);
