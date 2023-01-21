@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "../CSS/Login.css";
@@ -20,12 +21,7 @@ async function postData(credentials) {
     body: JSON.stringify(credentials),
   }).then((data) => data.json());
 }
-async function getStatus() {
-  const response = await fetch("http://localhost:8080/post");
-  var data = await response.json();
-  var res = data.status;
-  console.log(res);
-}
+
 export default function Login({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
@@ -40,25 +36,17 @@ export default function Login({ setToken }) {
     console.log(tk);
     console.log(typeof tk);
     await postData({ username, password, tk });
-
+    // await postData({ username, password });
     console.log("after");
 
     console.log(username, password, token);
-    const response = await fetch("http://localhost:8080/post");
-    var data = await response.json();
-    var res = data.status;
-    if (res == "no") {
-      console.log("Its a no!!");
-      return;
-    } else if (res == "yes") {
-      console.log("Its a yes");
-    }
+
     setToken(token);
   };
 
   return (
     <div className="login-wrapper">
-      <h1>Please Log In</h1>
+      <h1>Please  Register</h1>
       <form onSubmit={handleSubmit}>
         <label>
           <p>Username</p>
