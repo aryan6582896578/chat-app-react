@@ -5,6 +5,7 @@ function  App() {
   return(
 <>
     <Routes>
+
       <Route  path = "/" element={<Home_PAGE/>}/>
       <Route  path = "/home" element={<Home_PAGE/>}/>
       <Route  path = "/register" element={<REGISTER_PAGE/>}/>

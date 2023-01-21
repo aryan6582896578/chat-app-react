@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "../CSS/Login.css";
 
-async function loginUser(credentials) {
-  return fetch("http://localhost:8080/login", {
+async function Create_token_from_server(credentials) {
+  return fetch("http://localhost:8080/createtoken", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -11,8 +11,9 @@ async function loginUser(credentials) {
     body: JSON.stringify(credentials),
   }).then((data) => data.json());
 }
-async function postData(credentials) {
-  return fetch("http://localhost:8080/post", {
+
+async function send_login_data_to_server(credentials) {
+  return fetch("http://localhost:8080/receivelogindata", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -20,40 +21,49 @@ async function postData(credentials) {
     body: JSON.stringify(credentials),
   }).then((data) => data.json());
 }
-async function getStatus() {
-  const response = await fetch("http://localhost:8080/post");
-  var data = await response.json();
-  var res = data.status;
-  console.log(res);
-}
+
+// async function getStatus() {
+//   const response = await fetch("http://localhost:8080/receivelogindata");
+//   var data = await response.json();
+//   var res = data.status;
+//   console.log(res);
+// }
+
 export default function Login({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = await loginUser({
+    console.log("Creating Token ")
+    const gettoken = await Create_token_from_server({
       username,
       password,
     });
-    const tk = token.token;
-    console.log(tk);
-    console.log(typeof tk);
-    await postData({ username, password, tk });
+    const receivedtoken = gettoken.token;
 
-    console.log("after");
+    console.log("Token Created:", receivedtoken)
 
-    console.log(username, password, token);
-    const response = await fetch("http://localhost:8080/post");
-    var data = await response.json();
+    console.log("Sending Login Data To Server");
+    await send_login_data_to_server({
+      username,
+      password,
+      receivedtoken,
+    });
+
+    console.log("Data Sent Was: " + "Username: " + username +"  Password: " + password + "   Token: " + receivedtoken);
+
+    console.log("Searching For User")
+    const response = await fetch("http://localhost:8080/receivelogindata");
+    var data= await response.json();
     var res = data.status;
-    if (res == "no") {
-      console.log("Its a no!!");
+    if (res === "Access-Approved") {
+      console.log("User Found");
       return;
-    } else if (res == "yes") {
-      console.log("Its a yes");
+    } else if (res === "Access-denied") {
+      console.log("User Not Found");
     }
-    setToken(token);
+    // setToken(receivedtoken);
   };
 
   return (

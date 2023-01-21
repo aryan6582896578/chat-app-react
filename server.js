@@ -25,7 +25,7 @@ var rand = function () {
   return Math.random().toString(36).substr(2); // remove `0.`
 };
 
-app.use("/login", (req, res) => {
+app.use("/createtoken", (req, res) => {
   const token = rand();
   res.send({
     token,
@@ -70,29 +70,35 @@ app.use("/login", (req, res) => {
 //     }
 //   });
 // });
-
-app.use("/post", (req, res) => {
-  var myData = new User(req.body);
-  User.findOne({ username: myData.username }, function (err, docs) {
-    if (docs != null) {
-      User.findOne(
-        { username: myData.username, password: myData.password },
-        function (err, docs) {
+app.use("/receivelogindata", (req, res) => {
+  var receiveddata = new User(req.body);
+  if (receiveddata.username == 0 && receiveddata.password == 0) {
+    console.log("Someone is sending empty data")
+    responsetonull = { Server: "Hey Thats A Empty Data" };
+    res.send(responsetonull);
+  } else {
+    User.findOne({ username: receiveddata.username }, function (err, docs) {
+      if (docs == null) {
+        response = { Database: "user not found" };
+        res.send(response);
+      } else {
+        User.findOne({ username: receiveddata.username,password: receiveddata.password }, function (err, docs) {
           if (docs != null) {
-            console.log("Username and Password Matched.");
-            response = { status: "yes" };
+            console.log("Valid User");
+            response = { status: "Access-Approved" };
             res.send(response);
           } else {
-            response = { status: "no" };
+            console.log("Invalid User")
+            response = { status: "Access-denied" };
             res.send(response);
-            return;
+         
           }
         }
-      );
-    }
-  });
+        );
+      }
+    });
+  }
 });
-
 app.listen(8080, () =>
   console.log("API is running on http://localhost:8080/login")
 );
