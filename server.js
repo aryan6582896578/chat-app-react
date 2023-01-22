@@ -72,7 +72,7 @@ app.use("/name", (req, res) => {
     if (docs) {
       res.send({
         status: "Success",
-        name: docs,
+        name: docs.username,
       });
     } else {
       res.send({
