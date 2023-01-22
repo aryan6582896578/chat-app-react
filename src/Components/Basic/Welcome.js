@@ -1,40 +1,27 @@
-import React, { Component } from "react";
+import React from "react";
 
-export class Welcome extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: " ",
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
-  handleChange(event) {
-    this.setState({ name: event.target.value });
-    if (event.target.value.length > 20) {
-      this.setState({ name: "" });
-      alert("Maximum Length Exceeded");
-    }
-  }
-  render() {
-    return (
-      <>
-        <h1>Welcome {this.state.name}</h1>
-        <div className="bottom">
-          <form>
-            <input
-              type="text"
-              placeholder="Your Name here"
-              onChange={this.handleChange}
-            ></input>
-          </form>
-        </div>
-      </>
-    );
-  }
+async function sendToken(token) {
+  return fetch("http://localhost:8080/name", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ tk: token }),
+  }).then((data) => data.json());
 }
-Welcome.defaultProps = {
-  username: "Mausam",
-};
+async function getName() {
+  const response = await fetch("http://localhost:8080/name");
+  const data = await response.json();
+  const username = data;
+  console.log(data);
+}
 
-export default Welcome;
+export default function Welcome() {
+  sendToken(localStorage.getItem("token"));
+  getName();
+  return (
+    <>
+      <h1>Welcome </h1>
+    </>
+  );
+}
