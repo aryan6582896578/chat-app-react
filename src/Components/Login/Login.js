@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import PropTypes from "prop-types";
 import "../CSS/Login.css";
+import { Navigate} from "react-router-dom";
 
 async function Create_token_from_server(credentials) {
   return fetch("http://localhost:8080/createtoken", {
@@ -22,19 +23,13 @@ async function send_login_data_to_server(credentials) {
   }).then((data) => data.json());
 }
 
-// async function getStatus() {
-//   const response = await fetch("http://localhost:8080/receivelogindata");
-//   var data = await response.json();
-//   var res = data.status;
-//   console.log(res);
-// }
-
-export default function Login({ setToken }) {
+export default function Login() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     console.log("Creating Token ")
     const gettoken = await Create_token_from_server({
       username,
@@ -45,6 +40,7 @@ export default function Login({ setToken }) {
     console.log("Token Created:", receivedtoken)
 
     console.log("Sending Login Data To Server");
+
     await send_login_data_to_server({
       username,
       password,
@@ -57,13 +53,18 @@ export default function Login({ setToken }) {
     const response = await fetch("http://localhost:8080/receivelogindata");
     var data= await response.json();
     var res = data.status;
+    
     if (res === "Access-Approved") {
       console.log("User Found");
-      return;
+      // <Redirect to='https://twitter.com/home' />
+
+
+
     } else if (res === "Access-denied") {
       console.log("User Not Found");
     }
     // setToken(receivedtoken);
+
   };
 
   return (
@@ -89,6 +90,6 @@ export default function Login({ setToken }) {
   );
 }
 
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired,
-};
+// Login.propTypes = {
+//   setToken: PropTypes.func.isRequired,
+// };
